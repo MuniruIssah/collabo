@@ -12,6 +12,12 @@ export default function Room() {
   useEffect(() => {
     if (!id || !editorRef.current) return;
 
+    let rooms: Array<string> = JSON.parse(
+      localStorage.getItem("rooms") ?? "[]"
+    );
+    if (!rooms.includes(id))
+      localStorage.setItem("rooms", JSON.stringify([...rooms, id]));
+
     const ydocument = new Y.Doc();
     const provider = new WebsocketProvider(
       "wss://demos.yjs.dev/ws",
